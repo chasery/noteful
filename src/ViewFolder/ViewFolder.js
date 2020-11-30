@@ -21,15 +21,17 @@ class ViewFolder extends Component {
       );
     });
     const notes = STORE.notes.map((note) => {
-      return (
-        <Note
-          key={note.id}
-          id={note.id}
-          name={note.name}
-          modified={note.modified}
-          folderId={note.folderId}
-        />
-      );
+      if (note.folderId === this.props.match.params.folderId) {
+        return (
+          <Note
+            key={note.id}
+            id={note.id}
+            name={note.name}
+            modified={note.modified}
+            folderId={note.folderId}
+          />
+        );
+      }
     });
     return (
       <Fragment>
