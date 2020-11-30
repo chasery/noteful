@@ -1,0 +1,8 @@
+.NoteList {
+  flex: 3;
+}
+
+.NoteList > ul {
+  margin: 0 0 1rem;
+  padding: 0;
+}

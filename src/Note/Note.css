@@ -1,0 +1,40 @@
+.Note {
+  padding: 1rem;
+  border-radius: 0.25rem;
+  border: 0.0625rem solid #0000001c;
+  list-style: none;
+}
+
+.Note + .Note {
+  margin-top: 1rem;
+}
+
+.Note__header {
+  display: flex;
+}
+
+.Note__header > div {
+  flex-grow: 1;
+}
+
+.Note__content {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 0.0625rem solid #0000001c;
+}
+
+.Note__title {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+}
+
+.Note__modified {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.Note__delete {
+  flex-grow: 0;
+  align-self: flex-end;
+}
