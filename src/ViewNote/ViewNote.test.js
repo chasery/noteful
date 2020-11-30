@@ -1,11 +1,11 @@
 import React from "react";
 import { shallow } from "enzyme";
 import toJson from "enzyme-to-json";
-import NoteView from "./NoteView";
+import ViewNote from "./ViewNote";
 
-describe("NoteView component", () => {
+describe("ViewNote component", () => {
   it("renders without error", () => {
-    const wrapper = shallow(<NoteView />);
+    const wrapper = shallow(<ViewNote />);
     expect(toJson(wrapper)).toMatchSnapshot();
   });
 });

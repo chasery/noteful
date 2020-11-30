@@ -1,7 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Folder component renders without error 1`] = `
-<div>
-  Folder
-</div>
+<li
+  className="Folder"
+>
+  <Link
+    className="Folder__link"
+    to="folder/undefined"
+  >
+    <h2
+      className="Folder__title"
+    />
+  </Link>
+</li>
 `;

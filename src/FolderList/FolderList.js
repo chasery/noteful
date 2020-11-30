@@ -1,8 +1,13 @@
 import React, { Component } from "react";
+import "./FolderList.css";
 
 class FolderList extends Component {
   render() {
-    return <div>FolderList</div>;
+    return (
+      <section className="FolderList">
+        <ul>{this.props.children}</ul>
+      </section>
+    );
   }
 }
 

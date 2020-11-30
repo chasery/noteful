@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`FolderList component renders without error 1`] = `
-<div>
-  FolderList
-</div>
+<section
+  className="FolderList"
+>
+  <ul />
+</section>
 `;

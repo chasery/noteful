@@ -1,7 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`App component renders without error 1`] = `
-<div>
-  App
-</div>
+<Fragment>
+  <Header />
+  <main
+    className="App"
+  >
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/"
+    />
+    <Route
+      component={[Function]}
+      path="/folder/:folderId"
+    />
+    <Route
+      component={[Function]}
+      path="/note/:noteId"
+    />
+  </main>
+</Fragment>
 `;

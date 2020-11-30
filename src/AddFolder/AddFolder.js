@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./AddFolder.css";
 
 class AddFolder extends Component {
   render() {

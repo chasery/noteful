@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`NoteList component renders without error 1`] = `
-<div>
-  NoteList
-</div>
+<section
+  className="NoteList"
+>
+  <ul />
+</section>
 `;

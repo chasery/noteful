@@ -1,7 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Note component renders without error 1`] = `
-<div>
-  Note
-</div>
+<li
+  className="Note"
+>
+  <div>
+    <h2
+      className="Note__title"
+    >
+      <Link
+        to="/note/undefined"
+      />
+    </h2>
+    <h3
+      className="Note__modified"
+    >
+      Date modified on 
+    </h3>
+  </div>
+  <button
+    className="Note__delete"
+  >
+    Delete Note
+  </button>
+</li>
 `;
