@@ -3,7 +3,7 @@
   border: 0.0625rem solid #0000001c;
 }
 
-.Folder.selected {
+.Folder .active {
   background-color: lightblue;
 }
 

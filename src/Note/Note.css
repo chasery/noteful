@@ -1,5 +1,4 @@
 .Note {
-  display: flex;
   padding: 1rem;
   border-radius: 0.25rem;
   border: 0.0625rem solid #0000001c;
@@ -10,8 +9,18 @@
   margin-top: 1rem;
 }
 
-.Note > div {
+.Note__header {
+  display: flex;
+}
+
+.Note__header > div {
   flex-grow: 1;
+}
+
+.Note__content {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 0.0625rem solid #0000001c;
 }
 
 .Note__title {
