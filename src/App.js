@@ -17,8 +17,8 @@ class App extends Component {
         <Header />
         <main className="App">
           <Route exact path={"/"} component={ViewAll} />
-          <Route path={"/folder/:folderId"} component={ViewFolder} />
-          <Route path={"/note/:noteId"} component={ViewNote} />
+          <Route path="/folder/:folderId" component={ViewFolder} />
+          <Route path="/note/:noteId" component={ViewNote} />
         </main>
       </Fragment>
     );
