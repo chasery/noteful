@@ -5,5 +5,8 @@ exports[`FolderList component renders without error 1`] = `
   className="FolderList"
 >
   <ul />
+  <button>
+    Add Folder
+  </button>
 </section>
 `;

@@ -5,5 +5,8 @@ exports[`NoteList component renders without error 1`] = `
   className="NoteList"
 >
   <ul />
+  <button>
+    Add Note
+  </button>
 </section>
 `;

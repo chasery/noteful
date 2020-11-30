@@ -6,6 +6,7 @@ class NoteList extends Component {
     return (
       <section className="NoteList">
         <ul>{this.props.children}</ul>
+        <button>Add Note</button>
       </section>
     );
   }

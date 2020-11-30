@@ -8,18 +8,24 @@ import "./ViewAll.css";
 
 class ViewAll extends Component {
   render() {
+    const folders = STORE.folders.map((folder) => {
+      return <Folder key={folder.id} id={folder.id} name={folder.name} />;
+    });
+    const notes = STORE.notes.map((note) => {
+      return (
+        <Note
+          key={note.id}
+          id={note.id}
+          name={note.name}
+          modified={note.modified}
+          folderId={note.folderId}
+        />
+      );
+    });
     return (
       <Fragment>
-        <FolderList>
-          <Folder id="test" name="Test Folder" />
-          <Folder id="test" name="Test Folder" />
-          <Folder id="test" name="Test Folder" />
-        </FolderList>
-        <NoteList>
-          <Note id="test" name="Test Note" modified="10/10/2020" />
-          <Note id="test" name="Test Note" modified="10/10/2020" />
-          <Note id="test" name="Test Note" modified="10/10/2020" />
-        </NoteList>
+        <FolderList>{folders}</FolderList>
+        <NoteList>{notes}</NoteList>
       </Fragment>
     );
   }

@@ -6,6 +6,7 @@ class FolderList extends Component {
     return (
       <section className="FolderList">
         <ul>{this.props.children}</ul>
+        <button>Add Folder</button>
       </section>
     );
   }
