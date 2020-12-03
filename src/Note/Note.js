@@ -4,10 +4,6 @@ import "./Note.css";
 
 class Note extends Component {
   render() {
-    let content;
-    if (this.props.match.params.noteId) {
-      content = <div className="Note__content">{this.props.content}</div>;
-    }
     return (
       <li className="Note">
         <div className="Note__header">
@@ -23,7 +19,9 @@ class Note extends Component {
             Delete Note
           </button>
         </div>
-        {content}
+        {this.props.match.params.noteId && (
+          <div className="Note__content">{this.props.content}</div>
+        )}
       </li>
     );
   }
