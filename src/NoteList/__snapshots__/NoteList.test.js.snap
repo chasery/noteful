@@ -1,12 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`NoteList component renders without error 1`] = `
-<section
-  className="NoteList"
->
-  <ul />
-  <button>
-    Add Note
-  </button>
-</section>
+<ContextConsumer>
+  <Component />
+</ContextConsumer>
 `;

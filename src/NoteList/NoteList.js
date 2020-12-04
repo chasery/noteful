@@ -1,18 +1,40 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import NotefulContext from "../NotefulContext";
+import Note from "../Note/Note";
 import "./NoteList.css";
 
 class NoteList extends Component {
+  static contextType = NotefulContext;
+  static defaultProps = {
+    notes: [],
+  };
+
   render() {
-    let button;
-    if (!this.props.match.params.noteId) {
-      button = <button disabled>Add Note</button>;
-    }
+    const notes = this.context.notes
+      .filter((note) => {
+        if (this.props.match.params.folderId) {
+          return note.folderId === this.props.match.params.folderId;
+        } else {
+          return note;
+        }
+      })
+      .map((note) => {
+        return (
+          <Note
+            key={note.id}
+            id={note.id}
+            name={note.name}
+            modified={note.modified}
+            folderId={note.folderId}
+          />
+        );
+      });
 
     return (
       <section className="NoteList">
-        <ul>{this.props.children}</ul>
-        {button}
+        <ul>{notes}</ul>
+        <button disabled>Add Note</button>
       </section>
     );
   }

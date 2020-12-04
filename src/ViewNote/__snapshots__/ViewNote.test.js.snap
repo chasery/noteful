@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ViewNote component renders without error 1`] = `
-<div>
-  ViewFolder
-</div>
+<ContextConsumer>
+  <Component />
+</ContextConsumer>
 `;

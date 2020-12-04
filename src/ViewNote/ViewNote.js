@@ -1,31 +1,40 @@
-import React, { Component, Fragment } from "react";
-import STORE from "../store";
-import FolderList from "../FolderList/FolderList";
-import NoteList from "../NoteList/NoteList";
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import NotefulContext from "../NotefulContext";
 import Note from "../Note/Note";
 import "./ViewNote.css";
 
 class ViewNote extends Component {
+  static contextType = NotefulContext;
+  static defaultProps = {
+    notes: [],
+  };
+
   render() {
-    const note = STORE.notes.find(
-      (note) => note.id === this.props.match.params.noteId
-    );
+    const note = this.context.notes
+      .filter((note) =>
+        note.id === this.props.match.params.noteId ? note : ""
+      )
+      .map((note) => (
+        <Note
+          key={note.id}
+          id={note.id}
+          name={note.name}
+          modified={note.modified}
+          folderId={note.folderId}
+          content={note.content}
+        />
+      ));
+
     return (
-      <Fragment>
-        <FolderList></FolderList>
-        <NoteList>
-          <Note
-            key={note.id}
-            id={note.id}
-            name={note.name}
-            modified={note.modified}
-            folderId={note.folderId}
-            content={note.content}
-          />
-        </NoteList>
-      </Fragment>
+      <>
+        <div className="ControlContainer">
+          <button onClick={() => this.props.history.goBack()}>Go Back</button>
+        </div>
+        <div className="NoteContainer">{note}</div>
+      </>
     );
   }
 }
 
-export default ViewNote;
+export default withRouter(ViewNote);

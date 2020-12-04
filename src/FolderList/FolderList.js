@@ -1,22 +1,23 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import Folder from "../Folder/Folder";
+import NotefulContext from "../NotefulContext";
 import "./FolderList.css";
 
 class FolderList extends Component {
+  static contextType = NotefulContext;
+  static defaultDrops = {
+    folders: [],
+  };
   render() {
-    let button;
-    if (this.props.match.params.noteId) {
-      button = (
-        <button onClick={() => this.props.history.goBack()}>Go Back</button>
-      );
-    } else {
-      button = <button disabled>Add Folder</button>;
-    }
+    const folders = this.context.folders.map((folder) => {
+      return <Folder key={folder.id} id={folder.id} name={folder.name} />;
+    });
 
     return (
       <section className="FolderList">
-        <ul>{this.props.children}</ul>
-        {button}
+        <ul>{folders}</ul>
+        <button disabled>Add Folder</button>
       </section>
     );
   }

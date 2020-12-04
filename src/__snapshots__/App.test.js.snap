@@ -6,19 +6,28 @@ exports[`App component renders without error 1`] = `
   <main
     className="App"
   >
-    <Route
-      component={[Function]}
-      exact={true}
-      path="/"
-    />
-    <Route
-      component={[Function]}
-      path="/folder/:folderId"
-    />
-    <Route
-      component={[Function]}
-      path="/note/:noteId"
-    />
+    <ContextProvider
+      value={
+        Object {
+          "folders": Array [],
+          "notes": Array [],
+        }
+      }
+    >
+      <Route
+        component={[Function]}
+        exact={true}
+        path="/"
+      />
+      <Route
+        component={[Function]}
+        path="/folder/:folderId"
+      />
+      <Route
+        component={[Function]}
+        path="/note/:noteId"
+      />
+    </ContextProvider>
   </main>
 </Fragment>
 `;

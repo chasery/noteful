@@ -1,12 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`FolderList component renders without error 1`] = `
-<section
-  className="FolderList"
->
-  <ul />
-  <button>
-    Add Folder
-  </button>
-</section>
+<ContextConsumer>
+  <Component />
+</ContextConsumer>
 `;
