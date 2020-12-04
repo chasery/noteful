@@ -35,11 +35,21 @@ class App extends Component {
       });
   }
 
+  deleteNote = (noteId) => {
+    const updatedNotes = this.state.notes.filter((note) => note.id !== noteId);
+
+    this.setState({
+      notes: updatedNotes,
+    });
+  };
+
   render() {
     const contextValue = {
       folders: this.state.folders,
       notes: this.state.notes,
+      deleteNote: this.deleteNote,
     };
+
     return (
       <>
         <Header />
