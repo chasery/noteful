@@ -10,6 +10,7 @@ class Note extends Component {
     const noteUrl = `http://localhost:9090/notes/${noteId}`;
     fetch(noteUrl, {
       method: "DELETE",
+      "content-type": "application/json",
       mode: "cors",
     })
       .then((response) => {

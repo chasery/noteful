@@ -41,6 +41,14 @@ class App extends Component {
       });
   }
 
+  addFolder = (folderId, folderName) => {
+    const newFolder = { id: folderId, name: folderName };
+
+    this.setState((prevState) => ({
+      folders: [...prevState.folders, newFolder],
+    }));
+  };
+
   deleteNote = (noteId) => {
     const updatedNotes = this.state.notes.filter((note) => note.id !== noteId);
 
@@ -54,6 +62,7 @@ class App extends Component {
       folders: this.state.folders,
       notes: this.state.notes,
       deleteNote: this.deleteNote,
+      addFolder: this.addFolder,
     };
 
     return (
