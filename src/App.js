@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 import NotefulContext from "./NotefulContext";
 import Header from "./Header/Header";
 import ViewFolder from "./ViewFolder/ViewFolder";
+import AddFolder from "./AddFolder/AddFolder";
 import ViewNote from "./ViewNote/ViewNote";
 import "./App.css";
 
@@ -22,6 +23,11 @@ class App extends Component {
 
     Promise.all([fetch(foldersUrl), fetch(notesUrl)])
       .then(([foldersRes, notesRes]) => {
+        if (!foldersRes.ok || !notesRes.ok) {
+          return Promise.all([foldersRes, notesRes]).then((error) => {
+            throw error;
+          });
+        }
         return Promise.all([foldersRes.json(), notesRes.json()]);
       })
       .then(([folders, notes]) => {
@@ -57,6 +63,7 @@ class App extends Component {
           <NotefulContext.Provider value={contextValue}>
             <Route exact path={"/"} component={ViewFolder} />
             <Route path="/folder/:folderId" component={ViewFolder} />
+            <Route path="/add-folder/" component={AddFolder} />
             <Route path="/note/:noteId" component={ViewNote} />
           </NotefulContext.Provider>
         </main>

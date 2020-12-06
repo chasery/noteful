@@ -12,13 +12,17 @@ class NoteList extends Component {
 
   render() {
     const notes = this.context.notes
-      .filter((note) => {
-        if (this.props.match.params.folderId) {
-          return note.folderId === this.props.match.params.folderId;
-        } else {
-          return note;
-        }
-      })
+      .filter(
+        (note) =>
+          !this.props.match.params.folderId ||
+          note.folderId === this.props.match.params.folderId
+
+        // if (this.props.match.params.folderId) {
+        //   return note.folderId === this.props.match.params.folderId;
+        // } else {
+        //   return note;
+        // }
+      )
       .map((note) => {
         return (
           <Note

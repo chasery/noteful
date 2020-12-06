@@ -4,6 +4,18 @@
 }
 
 .FolderList > ul {
-  margin: 0 0 1rem;
+  margin: 0;
   padding: 0;
+}
+
+.AddFolder {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.AddFolder__link {
+  padding: 1rem 1.5rem;
+  border: 0.0625rem solid #0000001c;
+  border-radius: 0.25rem;
 }

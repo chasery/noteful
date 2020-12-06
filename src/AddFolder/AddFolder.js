@@ -3,7 +3,11 @@ import "./AddFolder.css";
 
 class AddFolder extends Component {
   render() {
-    return <div>AddFolder</div>;
+    return (
+      <>
+        <div>Add Folder</div>
+      </>
+    );
   }
 }
 

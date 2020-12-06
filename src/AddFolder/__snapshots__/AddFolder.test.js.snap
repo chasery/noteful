@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AddFolder component renders without error 1`] = `
-<div>
-  AddFolder
-</div>
+<Fragment>
+  <div>
+    Add Folder
+  </div>
+</Fragment>
 `;
