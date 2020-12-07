@@ -9,12 +9,12 @@ class AddFolder extends Component {
 
   state = {
     folderName: "",
-    folderId: uuidv4(),
   };
 
   addFolderRequest(e) {
     e.preventDefault();
-    const { folderName, folderId } = this.state;
+    const { folderName } = this.state;
+    const folderId = uuidv4();
     const folder = { id: folderId, name: folderName };
     const foldersUrl = `http://localhost:9090/folders`;
 
