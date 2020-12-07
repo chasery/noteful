@@ -5,6 +5,7 @@ import Header from "./Header/Header";
 import ViewFolder from "./ViewFolder/ViewFolder";
 import AddFolder from "./AddFolder/AddFolder";
 import ViewNote from "./ViewNote/ViewNote";
+import AddNote from "./AddNote/AddNote";
 import "./App.css";
 
 class App extends Component {
@@ -41,11 +42,9 @@ class App extends Component {
       });
   }
 
-  addFolder = (folderId, folderName) => {
-    const newFolder = { id: folderId, name: folderName };
-
+  addNote = (newNote) => {
     this.setState((prevState) => ({
-      folders: [...prevState.folders, newFolder],
+      notes: [...prevState.notes, newNote],
     }));
   };
 
@@ -57,10 +56,19 @@ class App extends Component {
     });
   };
 
+  addFolder = (folderId, folderName) => {
+    const newFolder = { id: folderId, name: folderName };
+
+    this.setState((prevState) => ({
+      folders: [...prevState.folders, newFolder],
+    }));
+  };
+
   render() {
     const contextValue = {
       folders: this.state.folders,
       notes: this.state.notes,
+      addNote: this.addNote,
       deleteNote: this.deleteNote,
       addFolder: this.addFolder,
     };
@@ -74,6 +82,7 @@ class App extends Component {
             <Route path="/folder/:folderId" component={ViewFolder} />
             <Route path="/add-folder/" component={AddFolder} />
             <Route path="/note/:noteId" component={ViewNote} />
+            <Route path="/add-note/" component={AddNote} />
           </NotefulContext.Provider>
         </main>
       </>

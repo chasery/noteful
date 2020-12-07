@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import NotefulContext from "../NotefulContext";
 import Note from "../Note/Note";
 import "./NoteList.css";
@@ -16,12 +16,6 @@ class NoteList extends Component {
         (note) =>
           !this.props.match.params.folderId ||
           note.folderId === this.props.match.params.folderId
-
-        // if (this.props.match.params.folderId) {
-        //   return note.folderId === this.props.match.params.folderId;
-        // } else {
-        //   return note;
-        // }
       )
       .map((note) => {
         return (
@@ -37,8 +31,12 @@ class NoteList extends Component {
 
     return (
       <section className="NoteList">
-        <ul>{notes}</ul>
-        <button disabled>Add Note</button>
+        {notes.length > 0 && <ul>{notes}</ul>}
+        <div className="AddNote">
+          <Link className="AddNote__link" to={`/add-note`}>
+            + Add Note
+          </Link>
+        </div>
       </section>
     );
   }
