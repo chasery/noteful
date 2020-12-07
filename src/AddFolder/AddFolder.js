@@ -3,20 +3,24 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import NotefulContext from "../NotefulContext";
+import InputError from "../InputError/InputError";
 import "./AddFolder.css";
 
 class AddFolder extends Component {
   static contextType = NotefulContext;
 
   state = {
-    folderName: "",
+    folderName: {
+      value: "",
+      touched: false,
+    },
   };
 
   addFolderRequest(e) {
     e.preventDefault();
     const { folderName } = this.state;
     const folderId = uuidv4();
-    const folder = { id: folderId, name: folderName };
+    const folder = { id: folderId, name: folderName.value };
     const foldersUrl = `http://localhost:9090/folders`;
 
     fetch(foldersUrl, {
@@ -45,8 +49,20 @@ class AddFolder extends Component {
 
   updateFolderName(folderName) {
     this.setState({
-      folderName,
+      folderName: {
+        value: folderName,
+        touched: true,
+      },
     });
+  }
+
+  validateFolderName() {
+    const folderName = this.state.folderName.value.trim();
+    if (folderName.length === 0) {
+      return "Folder name is required";
+    } else if (folderName.length < 2) {
+      return "Folder name must be at least 2 characters long";
+    }
   }
 
   render() {
@@ -62,12 +78,18 @@ class AddFolder extends Component {
           <input
             id="Name"
             type="text"
-            value={folderName}
-            required
+            value={folderName.value}
             onChange={(e) => this.updateFolderName(e.target.value)}
           />
+          {this.state.folderName.touched && (
+            <InputError message={this.validateFolderName()} />
+          )}
         </div>
-        <button className="Form__submit" type="submit">
+        <button
+          className="Form__submit"
+          type="submit"
+          disabled={this.validateFolderName()}
+        >
           Add Folder
         </button>
       </form>
