@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class FolderError extends Component {
   static getDerivedStateFromError(error) {
@@ -21,5 +22,13 @@ class FolderError extends Component {
     return this.props.children;
   }
 }
+
+FolderError.defaultProps = {
+  children: {},
+};
+
+FolderError.propTypes = {
+  children: PropTypes.object.isRequired,
+};
 
 export default FolderError;

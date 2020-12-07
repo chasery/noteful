@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class NoteError extends Component {
   static getDerivedStateFromError(error) {
@@ -17,5 +18,13 @@ class NoteError extends Component {
     return this.props.children;
   }
 }
+
+NoteError.defaultProps = {
+  children: {},
+};
+
+NoteError.propTypes = {
+  children: PropTypes.object.isRequired,
+};
 
 export default NoteError;
