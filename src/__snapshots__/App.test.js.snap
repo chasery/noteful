@@ -9,6 +9,9 @@ exports[`App component renders without error 1`] = `
     <ContextProvider
       value={
         Object {
+          "addFolder": [Function],
+          "addNote": [Function],
+          "deleteNote": [Function],
           "folders": Array [],
           "notes": Array [],
         }
@@ -25,7 +28,15 @@ exports[`App component renders without error 1`] = `
       />
       <Route
         component={[Function]}
+        path="/add-folder/"
+      />
+      <Route
+        component={[Function]}
         path="/note/:noteId"
+      />
+      <Route
+        component={[Function]}
+        path="/add-note/"
       />
     </ContextProvider>
   </main>

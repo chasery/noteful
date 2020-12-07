@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import NotefulContext from "../NotefulContext";
 import Note from "../Note/Note";
@@ -6,9 +7,6 @@ import "./ViewNote.css";
 
 class ViewNote extends Component {
   static contextType = NotefulContext;
-  static defaultProps = {
-    notes: [],
-  };
 
   render() {
     const note = this.context.notes
@@ -36,5 +34,25 @@ class ViewNote extends Component {
     );
   }
 }
+
+ViewNote.defaultProps = {
+  notes: [],
+  match: {
+    params: {
+      noteId: "1",
+    },
+  },
+};
+
+ViewNote.propTypes = {
+  context: PropTypes.shape({
+    notes: PropTypes.array.isRequired,
+  }),
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      noteId: PropTypes.string.isRequired,
+    }),
+  }),
+};
 
 export default withRouter(ViewNote);

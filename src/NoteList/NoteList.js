@@ -1,43 +1,55 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
+import { withRouter, Link } from "react-router-dom";
 import NotefulContext from "../NotefulContext";
 import Note from "../Note/Note";
+import NoteError from "../NoteError/NoteError";
 import "./NoteList.css";
 
 class NoteList extends Component {
   static contextType = NotefulContext;
-  static defaultProps = {
-    notes: [],
-  };
 
   render() {
     const notes = this.context.notes
-      .filter((note) => {
-        if (this.props.match.params.folderId) {
-          return note.folderId === this.props.match.params.folderId;
-        } else {
-          return note;
-        }
-      })
+      .filter(
+        (note) =>
+          !this.props.match.params.folderId ||
+          note.folderId === this.props.match.params.folderId
+      )
       .map((note) => {
         return (
-          <Note
-            key={note.id}
-            id={note.id}
-            name={note.name}
-            modified={note.modified}
-            folderId={note.folderId}
-          />
+          <NoteError key={note.id}>
+            <Note
+              id={note.id}
+              name={note.name}
+              modified={note.modified}
+              folderId={note.folderId}
+            />
+          </NoteError>
         );
       });
 
     return (
       <section className="NoteList">
-        <ul>{notes}</ul>
-        <button disabled>Add Note</button>
+        {notes.length > 0 && <ul>{notes}</ul>}
+        <div className="AddNote">
+          <Link className="AddNote__link" to={`/add-note`}>
+            + Add Note
+          </Link>
+        </div>
       </section>
     );
   }
 }
+
+NoteList.defaultProps = {
+  notes: [],
+};
+
+NoteList.propTypes = {
+  context: PropTypes.shape({
+    notes: PropTypes.array.isRequired,
+  }),
+};
 
 export default withRouter(NoteList);

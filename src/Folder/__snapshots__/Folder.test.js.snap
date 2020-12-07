@@ -4,13 +4,15 @@ exports[`Folder component renders without error 1`] = `
 <li
   className="Folder"
 >
-  <Link
+  <NavLink
     className="Folder__link"
-    to="folder/undefined"
+    to="/folder/1"
   >
     <h2
       className="Folder__title"
-    />
-  </Link>
+    >
+      Folder
+    </h2>
+  </NavLink>
 </li>
 `;
