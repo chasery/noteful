@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import NotefulContext from "../NotefulContext";
 import Note from "../Note/Note";
+import NoteError from "../NoteError/NoteError";
 import "./NoteList.css";
 
 class NoteList extends Component {
@@ -17,13 +18,14 @@ class NoteList extends Component {
       )
       .map((note) => {
         return (
-          <Note
-            key={note.id}
-            id={note.id}
-            name={note.name}
-            modified={note.modified}
-            folderId={note.folderId}
-          />
+          <NoteError key={note.id}>
+            <Note
+              id={note.id}
+              name={note.name}
+              modified={note.modified}
+              folderId={note.folderId}
+            />
+          </NoteError>
         );
       });
 

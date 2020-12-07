@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import Folder from "../Folder/Folder";
+import FolderError from "../FolderError/FolderError";
 import NotefulContext from "../NotefulContext";
 import "./FolderList.css";
 
@@ -10,7 +11,11 @@ class FolderList extends Component {
 
   render() {
     const folders = this.context.folders.map((folder) => {
-      return <Folder key={folder.id} id={folder.id} name={folder.name} />;
+      return (
+        <FolderError key={folder.id}>
+          <Folder id={folder.id} name={folder.name} />
+        </FolderError>
+      );
     });
 
     return (

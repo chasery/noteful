@@ -32,6 +32,13 @@ class Note extends Component {
       });
   }
 
+  noteDate(date) {
+    const dateObj = new Date(date);
+    return `${
+      dateObj.getMonth() + 1
+    }/${dateObj.getDate()}/${dateObj.getFullYear()}`;
+  }
+
   render() {
     return (
       <li className="Note">
@@ -41,7 +48,7 @@ class Note extends Component {
               <Link to={`/note/${this.props.id}`}>{this.props.name}</Link>
             </h2>
             <h3 className="Note__modified">
-              Date modified on {this.props.modified}
+              Date modified on {this.noteDate(this.props.modified)}
             </h3>
           </div>
           <button
@@ -71,7 +78,7 @@ Note.defaultProps = {
 
 Note.propTypes = {
   id: PropTypes.string.isRequired,
-  name: PropTypes.string,
+  name: PropTypes.string.isRequired,
   modified: (props, propName, componentName) => {
     const prop = props[propName];
 
@@ -88,7 +95,6 @@ Note.propTypes = {
     }
 
     if (
-      prop.length < 5 ||
       !prop.match(
         new RegExp(
           /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/
@@ -100,7 +106,7 @@ Note.propTypes = {
       );
     }
   },
-  content: PropTypes.string,
+  content: PropTypes.string.isRequired,
   context: PropTypes.shape({
     deleteNote: PropTypes.func.isRequired,
   }),
