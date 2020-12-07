@@ -87,8 +87,8 @@ class AddNote extends Component {
 
     this.setState({
       noteFolder: {
-        value: folder.name,
-        id: folder.id,
+        value: folderId ? folder.name : "",
+        id: folderId ? folder.id : "",
         touched: true,
       },
     });
