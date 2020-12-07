@@ -35,7 +35,7 @@ class AddFolder extends Component {
       })
       .then((json) => {
         this.props.history.push(`/folder/${folderId}`);
-        this.context.addFolder(folderId, folderName);
+        this.context.addFolder(folder);
       })
       .catch((status) => {
         console.log(status);
@@ -52,15 +52,23 @@ class AddFolder extends Component {
     const { folderName } = this.state;
 
     return (
-      <form onSubmit={(e) => this.addFolderRequest(e)}>
-        <label htmlFor="Name">Folder Name</label>
-        <input
-          id="Name"
-          type="text"
-          value={folderName}
-          onChange={(e) => this.updateFolderName(e.target.value)}
-        />
-        <button type="submit">Add Folder</button>
+      <form className="Form" onSubmit={(e) => this.addFolderRequest(e)}>
+        <h3>Add a folder</h3>
+        <div className="Form__group">
+          <label htmlFor="Name">
+            Folder Name:<span className="Form__required">*</span>
+          </label>
+          <input
+            id="Name"
+            type="text"
+            value={folderName}
+            required
+            onChange={(e) => this.updateFolderName(e.target.value)}
+          />
+        </div>
+        <button className="Form__submit" type="submit">
+          Add Folder
+        </button>
       </form>
     );
   }

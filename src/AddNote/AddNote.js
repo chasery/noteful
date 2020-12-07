@@ -14,36 +14,43 @@ class AddNote extends Component {
     noteContent: "",
   };
 
-  // addNoteRequest(e) {
-  //   e.preventDefault();
-  //   const { noteName: "" } = this.state;
-  //   const noteId = uuidv4();
-  //   const note = { id: noteId, name: folderName };
-  //   const foldersUrl = `http://localhost:9090/folders`;
+  addNoteRequest(e) {
+    e.preventDefault();
+    const { noteName, noteFolderId, noteContent } = this.state;
+    const noteId = uuidv4();
+    const noteModified = new Date().toISOString();
+    const note = {
+      id: noteId,
+      name: noteName,
+      modified: noteModified,
+      folderId: noteFolderId,
+      content: noteContent,
+    };
+    const foldersUrl = `http://localhost:9090/notes`;
 
-  //   fetch(foldersUrl, {
-  //     method: "POST",
-  //     body: JSON.stringify(folder),
-  //     headers: {
-  //       "content-type": "application/json",
-  //       mode: "cors",
-  //     },
-  //   })
-  //     .then((response) => {
-  //       if (response.ok) {
-  //         return response.json();
-  //       } else {
-  //         throw response.status;
-  //       }
-  //     })
-  //     .then((json) => {
-  //       this.props.history.push(`/folder/${folderId}`);
-  //       this.context.addFolder(folderId, folderName);
-  //     })
-  //     .catch((status) => {
-  //       console.log(status);
-  //     });
-  // }
+    fetch(foldersUrl, {
+      method: "POST",
+      body: JSON.stringify(note),
+      headers: {
+        "content-type": "application/json",
+        mode: "cors",
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw response.status;
+        }
+      })
+      .then((json) => {
+        this.props.history.push(`/folder/${noteFolderId}`);
+        this.context.addNote(note);
+      })
+      .catch((status) => {
+        console.log(status);
+      });
+  }
 
   updateNoteName(noteName) {
     this.setState({
@@ -63,7 +70,6 @@ class AddNote extends Component {
     const folder = this.context.folders.find(
       (folder) => folderId === folder.id
     );
-    console.log(folder);
 
     this.setState({
       noteFolderName: folder.name,
@@ -81,21 +87,23 @@ class AddNote extends Component {
     const { noteName, noteFolderId, noteContent } = this.state;
 
     return (
-      <form>
-        <div className="FormGroup">
+      <form className="Form" onSubmit={(e) => this.addNoteRequest(e)}>
+        <h3>Add a note</h3>
+        <div className="Form__group">
           <label htmlFor="NoteName">
-            Note Name:<span className="FormGroup__required">*</span>
+            Note Name:<span className="Form__required">*</span>
           </label>
           <input
             id="NoteName"
             type="text"
             value={noteName}
+            required
             onChange={(e) => this.updateNoteName(e.target.value)}
           />
         </div>
-        <div className="FormGroup">
+        <div className="Form__group">
           <label htmlFor="NoteFolder">
-            Note Folder:<span className="FormGroup__required">*</span>
+            Note Folder:<span className="Form__required">*</span>
           </label>
           <select
             id="NoteFolder"
@@ -108,17 +116,20 @@ class AddNote extends Component {
             {this.getFolderOptions()}
           </select>
         </div>
-        <div className="FormGroup">
+        <div className="Form__group">
           <label htmlFor="NoteContent">
-            Note Content:<span className="FormGroup__required">*</span>
+            Note Content:<span className="Form__required">*</span>
           </label>
           <textarea
             id="NoteContent"
             value={noteContent}
+            required
             onChange={(e) => this.updateNoteContent(e.target.value)}
           />
         </div>
-        <button type="submit">Add Folder</button>
+        <button className="Form__submit" type="submit">
+          Add Note
+        </button>
       </form>
     );
   }

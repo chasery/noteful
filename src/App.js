@@ -56,9 +56,7 @@ class App extends Component {
     });
   };
 
-  addFolder = (folderId, folderName) => {
-    const newFolder = { id: folderId, name: folderName };
-
+  addFolder = (newFolder) => {
     this.setState((prevState) => ({
       folders: [...prevState.folders, newFolder],
     }));
