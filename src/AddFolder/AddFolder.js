@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import NotefulContext from "../NotefulContext";
@@ -73,5 +74,15 @@ class AddFolder extends Component {
     );
   }
 }
+
+AddFolder.defaultProps = {
+  addFolder: () => {},
+};
+
+AddFolder.propTypes = {
+  context: PropTypes.shape({
+    addFolder: PropTypes.func.isRequired,
+  }),
+};
 
 export default withRouter(AddFolder);

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import NotefulContext from "../NotefulContext";
@@ -134,5 +135,17 @@ class AddNote extends Component {
     );
   }
 }
+
+AddNote.defaultProps = {
+  folders: [],
+  addNote: () => {},
+};
+
+AddNote.propTypes = {
+  context: PropTypes.shape({
+    folders: PropTypes.array.isRequired,
+    addNote: PropTypes.func.isRequired,
+  }),
+};
 
 export default withRouter(AddNote);

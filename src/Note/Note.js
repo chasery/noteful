@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import NotefulContext from "../NotefulContext";
 import "./Note.css";
@@ -59,5 +60,50 @@ class Note extends Component {
     );
   }
 }
+
+Note.defaultProps = {
+  id: "1",
+  name: "",
+  modified: "",
+  content: "",
+  deleteNote: () => {},
+};
+
+Note.propTypes = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  modified: (props, propName, componentName) => {
+    const prop = props[propName];
+
+    if (!prop) {
+      return new Error(
+        `${propName} is required in ${componentName}. Validation Failed`
+      );
+    }
+
+    if (typeof prop != "string") {
+      return new Error(
+        `Invalid prop, ${propName} is expected to be a string in ${componentName}. ${typeof prop} found.`
+      );
+    }
+
+    if (
+      prop.length < 5 ||
+      !prop.match(
+        new RegExp(
+          /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/
+        )
+      )
+    ) {
+      return new Error(
+        `Invalid prop, ${propName} must be a valid complete precision ISO date string. Validation Failed.`
+      );
+    }
+  },
+  content: PropTypes.string,
+  context: PropTypes.shape({
+    deleteNote: PropTypes.func.isRequired,
+  }),
+};
 
 export default withRouter(Note);

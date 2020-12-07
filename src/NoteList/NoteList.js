@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { withRouter, Link } from "react-router-dom";
 import NotefulContext from "../NotefulContext";
 import Note from "../Note/Note";
@@ -6,9 +7,6 @@ import "./NoteList.css";
 
 class NoteList extends Component {
   static contextType = NotefulContext;
-  static defaultProps = {
-    notes: [],
-  };
 
   render() {
     const notes = this.context.notes
@@ -41,5 +39,15 @@ class NoteList extends Component {
     );
   }
 }
+
+NoteList.defaultProps = {
+  notes: [],
+};
+
+NoteList.propTypes = {
+  context: PropTypes.shape({
+    notes: PropTypes.array.isRequired,
+  }),
+};
 
 export default withRouter(NoteList);
