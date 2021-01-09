@@ -16,12 +16,12 @@ class Folder extends Component {
 }
 
 Folder.defaultProps = {
-  id: "1",
+  id: 1,
   name: "Folder",
 };
 
 Folder.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
 };
 

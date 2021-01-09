@@ -13,7 +13,7 @@ class FolderList extends Component {
     const folders = this.context.folders.map((folder) => {
       return (
         <FolderError key={folder.id}>
-          <Folder id={folder.id} name={folder.name} />
+          <Folder key={folder.id} id={folder.id} name={folder.folder_name} />
         </FolderError>
       );
     });
@@ -31,9 +31,11 @@ class FolderList extends Component {
   }
 }
 
-FolderList.defaultProps = {
-  folders: [],
-};
+// FolderList.defaultProps = {
+//   context: PropTypes.shape({
+//     folders: [],
+//   }),
+// };
 
 FolderList.propTypes = {
   context: PropTypes.shape({

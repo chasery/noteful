@@ -8,7 +8,7 @@ class Note extends Component {
   static contextType = NotefulContext;
 
   deleteNoteRequest(noteId, callback) {
-    const noteUrl = `http://localhost:9090/notes/${noteId}`;
+    const noteUrl = `http://localhost:8000/api/notes/${noteId}`;
     fetch(noteUrl, {
       method: "DELETE",
       "content-type": "application/json",
@@ -69,7 +69,7 @@ class Note extends Component {
 }
 
 Note.defaultProps = {
-  id: "1",
+  id: 1,
   name: "",
   modified: "",
   content: "",
@@ -77,7 +77,7 @@ Note.defaultProps = {
 };
 
 Note.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   modified: (props, propName, componentName) => {
     const prop = props[propName];

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 import NotefulContext from "../NotefulContext";
 import InputError from "../InputError/InputError";
 import "./AddNote.css";
@@ -13,35 +12,36 @@ class AddNote extends Component {
     noteName: {
       value: "",
       touched: false,
+      error: "",
     },
     noteFolder: {
       value: "",
       id: "",
       touched: false,
+      error: "",
     },
     noteContent: {
       value: "",
       touched: false,
+      error: "",
     },
   };
 
   addNoteRequest(e) {
     e.preventDefault();
     const { noteName, noteFolder, noteContent } = this.state;
-    const noteId = uuidv4();
-    const noteModified = new Date().toISOString();
-    const note = {
-      id: noteId,
-      name: noteName.value,
-      modified: noteModified,
-      folderId: noteFolder.id,
-      content: noteContent.value,
+    // const noteModified = new Date().toISOString();
+    const newNote = {
+      note_name: noteName.value,
+      // modified: noteModified,
+      folder_id: noteFolder.id,
+      note_content: noteContent.value,
     };
-    const foldersUrl = `http://localhost:9090/notes`;
+    const foldersUrl = `http://localhost:8000/api/notes`;
 
     fetch(foldersUrl, {
       method: "POST",
-      body: JSON.stringify(note),
+      body: JSON.stringify(newNote),
       headers: {
         "content-type": "application/json",
         mode: "cors",
@@ -55,8 +55,15 @@ class AddNote extends Component {
         }
       })
       .then((json) => {
-        this.props.history.push(`/folder/${note.folderId}`);
-        this.context.addNote(note);
+        const { id, note_name, note_content, modified, folder_id } = json;
+        this.props.history.push(`/folder/${folder_id}`);
+        this.context.addNote({
+          id,
+          note_name,
+          note_content,
+          folder_id,
+          modified,
+        });
       })
       .catch((status) => {
         console.log(status);
@@ -64,67 +71,127 @@ class AddNote extends Component {
   }
 
   updateNoteName(noteName) {
-    this.setState({
-      noteName: {
-        value: noteName,
-        touched: true,
-      },
-    });
+    this.setState(
+      (prevState) => ({
+        noteName: {
+          ...prevState.noteName,
+          value: noteName,
+          touched: true,
+        },
+      }),
+      this.validateNoteName
+    );
+  }
+
+  validateNoteName() {
+    const trimmedName = this.state.noteName.value.trim();
+
+    if (trimmedName.length === 0) {
+      this.setState((prevState) => ({
+        noteName: {
+          ...prevState.noteName,
+          error: "Note name is required",
+        },
+      }));
+    } else if (trimmedName.length < 2) {
+      this.setState((prevState) => ({
+        noteName: {
+          ...prevState.noteName,
+          error: "Note name must be at least 2 characters long",
+        },
+      }));
+    } else {
+      this.setState((prevState) => ({
+        noteName: {
+          ...prevState.noteName,
+          error: "",
+        },
+      }));
+    }
   }
 
   getFolderOptions() {
     return this.context.folders.map((folder) => (
       <option key={folder.id} value={folder.id}>
-        {folder.name}
+        {folder.folder_name}
       </option>
     ));
   }
 
   changeFolder(folderId) {
-    const folder = this.context.folders.find(
-      (folder) => folderId === folder.id
+    const folder = this.context.folders.filter((folder) => {
+      return folder.id === parseInt(folderId);
+    });
+    this.setState(
+      (prevState) => ({
+        noteFolder: {
+          ...prevState.noteFolder,
+          value: folderId ? folder[0].folder_name : "",
+          id: folderId ? folder[0].id : "",
+          touched: true,
+        },
+      }),
+      this.validateNoteFolder
     );
-
-    this.setState({
-      noteFolder: {
-        value: folderId ? folder.name : "",
-        id: folderId ? folder.id : "",
-        touched: true,
-      },
-    });
-  }
-
-  updateNoteContent(noteContent) {
-    this.setState({
-      noteContent: {
-        value: noteContent,
-        touched: true,
-      },
-    });
-  }
-
-  validateNoteName() {
-    const noteName = this.state.noteName.value.trim();
-    if (noteName.length === 0) {
-      return "Note name is required";
-    } else if (noteName.length < 2) {
-      return "Note name must be at least 2 characters long";
-    }
   }
 
   validateNoteFolder() {
-    const noteFolder = this.state.noteFolder.value.trim();
-    if (noteFolder.length === 0) {
-      return "Note folder is required";
+    const trimmedFolder = this.state.noteFolder.value.trim();
+
+    if (trimmedFolder.length === 0) {
+      this.setState((prevState) => ({
+        noteFolder: {
+          ...prevState.noteFolder,
+          error: "Note folder is required",
+        },
+      }));
+    } else {
+      this.setState((prevState) => ({
+        noteFolder: {
+          ...prevState.noteFolder,
+          error: "",
+        },
+      }));
     }
   }
 
+  updateNoteContent(noteContent) {
+    this.setState(
+      (prevState) => ({
+        noteContent: {
+          ...prevState.noteContent,
+          value: noteContent,
+          touched: true,
+        },
+      }),
+      this.validateNoteContent
+    );
+  }
+
   validateNoteContent() {
-    const noteContent = this.state.noteContent.value.trim();
-    if (noteContent.length === 0) {
-      return "Note content is required";
-    } else if (noteContent.length < 2) {
-      return "Note content must be at least 2 characters long";
+    const trimmedContent = this.state.noteContent.value.trim();
+
+    if (trimmedContent.length === 0) {
+      this.setState((prevState) => ({
+        noteContent: {
+          ...prevState.noteContent,
+          error: "Note content is required",
+        },
+      }));
+    } else if (trimmedContent.length < 2) {
+      this.setState((prevState) => ({
+        noteContent: {
+          ...prevState.noteContent,
+          error: "Note content must be at least 2 characters long",
+        },
+      }));
+    } else {
+      this.setState((prevState) => ({
+        noteContent: {
+          ...prevState.noteContent,
+          error: "",
+        },
+      }));
     }
   }
 
@@ -144,9 +211,13 @@ class AddNote extends Component {
             value={noteName.value}
             required
             onChange={(e) => this.updateNoteName(e.target.value)}
+            aria-required="true"
+            aria-invalid={noteName.error ? "true" : "false"}
+            aria-label="The name of your note"
+            aria-describedby={noteName.error ? "NoteNameError" : ""}
           />
-          {this.state.noteName.touched && (
-            <InputError message={this.validateNoteName()} />
+          {noteName.error && (
+            <InputError id={"NoteNameError"} message={noteName.error} />
           )}
         </div>
         <div className="Form__group">
@@ -159,12 +230,16 @@ class AddNote extends Component {
             value={noteFolder.id}
             required
             onChange={(e) => this.changeFolder(e.target.value)}
+            aria-required="true"
+            aria-invalid={noteFolder.error ? "true" : "false"}
+            aria-label="The folder you wish to put your note in"
+            aria-describedby={noteFolder.error ? "NoteFolderError" : ""}
           >
             <option value="">Select a Folder</option>
             {this.getFolderOptions()}
           </select>
-          {this.state.noteFolder.touched && (
-            <InputError message={this.validateNoteFolder()} />
+          {noteFolder.error && (
+            <InputError id={"NoteFolderError"} message={noteFolder.error} />
           )}
         </div>
         <div className="Form__group">
@@ -176,19 +251,19 @@ class AddNote extends Component {
             value={noteContent.value}
             required
             onChange={(e) => this.updateNoteContent(e.target.value)}
+            aria-required="true"
+            aria-invalid={noteContent.error ? "true" : "false"}
+            aria-label="The content of your note"
+            aria-describedby={noteContent.error ? "NoteContentError" : ""}
           />
-          {this.state.noteContent.touched && (
-            <InputError message={this.validateNoteContent()} />
+          {noteContent.error && (
+            <InputError id={"NoteContentError"} message={noteContent.error} />
           )}
         </div>
         <button
           className="Form__submit"
           type="submit"
-          disabled={
-            this.validateNoteName() ||
-            this.validateNoteFolder() ||
-            this.validateNoteContent()
-          }
+          disabled={noteName.error || noteFolder.error || noteContent.error}
         >
           Add Note
         </button>
@@ -197,10 +272,10 @@ class AddNote extends Component {
   }
 }
 
-AddNote.defaultProps = {
-  folders: [],
-  addNote: () => {},
-};
+// AddNote.defaultProps = {
+//   folders: [],
+//   addNote: () => {},
+// };
 
 AddNote.propTypes = {
   context: PropTypes.shape({

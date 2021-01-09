@@ -14,16 +14,16 @@ class NoteList extends Component {
       .filter(
         (note) =>
           !this.props.match.params.folderId ||
-          note.folderId === this.props.match.params.folderId
+          note.folder_id === parseInt(this.props.match.params.folderId)
       )
       .map((note) => {
         return (
           <NoteError key={note.id}>
             <Note
               id={note.id}
-              name={note.name}
+              name={note.note_name}
               modified={note.modified}
-              folderId={note.folderId}
+              folderId={note.folder_id}
             />
           </NoteError>
         );
@@ -42,9 +42,9 @@ class NoteList extends Component {
   }
 }
 
-NoteList.defaultProps = {
-  notes: [],
-};
+// NoteList.defaultProps = {
+//   notes: [],
+// };
 
 NoteList.propTypes = {
   context: PropTypes.shape({
