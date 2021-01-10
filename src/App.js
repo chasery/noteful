@@ -52,7 +52,23 @@ class App extends Component {
     }));
   };
 
-  editNote = () => {};
+  editNote = (noteId, updatedNote) => {
+    const { note_name, modified, note_content, folder_id } = updatedNote;
+    this.setState((prevState) => ({
+      notes: prevState.notes.map((note) =>
+        note.id === parseInt(noteId)
+          ? {
+              ...note,
+              id: parseInt(noteId),
+              note_name,
+              modified,
+              note_content,
+              folder_id,
+            }
+          : note
+      ),
+    }));
+  };
 
   deleteNote = (noteId) => {
     const updatedNotes = this.state.notes.filter(

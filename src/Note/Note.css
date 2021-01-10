@@ -35,6 +35,11 @@
 }
 
 .Note__delete {
+  margin-left: 0.5rem;
+}
+
+.Note__delete,
+.Note__edit {
   flex-grow: 0;
   align-self: flex-end;
 }
