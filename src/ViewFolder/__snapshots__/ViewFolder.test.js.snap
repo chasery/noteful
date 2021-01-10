@@ -2,7 +2,19 @@
 
 exports[`ViewFolder component renders without error 1`] = `
 <Fragment>
-  <withRouter(FolderList) />
-  <withRouter(NoteList) />
+  <div
+    className="FolderListWrapper"
+  >
+    <h2>
+      Folders
+    </h2>
+    <withRouter(FolderList) />
+  </div>
+  <div
+    className="NoteListWrapper"
+  >
+    <withRouter(NoteListHeader) />
+    <withRouter(NoteList) />
+  </div>
 </Fragment>
 `;
