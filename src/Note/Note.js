@@ -16,7 +16,7 @@ class Note extends Component {
     })
       .then((response) => {
         if (response.ok) {
-          return response.json();
+          return response.status;
         } else {
           throw response.status;
         }

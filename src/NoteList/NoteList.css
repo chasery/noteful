@@ -1,7 +1,3 @@
-.NoteList {
-  flex: 3;
-}
-
 .NoteList > ul {
   margin: 0;
   padding: 0;
@@ -9,6 +5,10 @@
 
 .NoteList > ul + .AddNote {
   margin-top: 1rem;
+}
+
+.NotesList__header h2 {
+  margin-top: 0;
 }
 
 .AddNote {

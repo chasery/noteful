@@ -11,16 +11,16 @@ class ViewNote extends Component {
   render() {
     const note = this.context.notes
       .filter((note) =>
-        note.id === this.props.match.params.noteId ? note : ""
+        note.id === parseInt(this.props.match.params.noteId) ? note : ""
       )
       .map((note) => (
         <Note
           key={note.id}
           id={note.id}
-          name={note.name}
+          name={note.note_name}
           modified={note.modified}
-          folderId={note.folderId}
-          content={note.content}
+          folderId={note.folder_id}
+          content={note.note_content}
         />
       ));
 

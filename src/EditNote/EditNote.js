@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import NotefulContext from "../NotefulContext";
 import InputError from "../InputError/InputError";
-import "./AddNote.css";
+import "./EditNote.css";
 
-class AddNote extends Component {
+class EditNote extends Component {
   static contextType = NotefulContext;
 
   state = {
@@ -119,15 +119,15 @@ class AddNote extends Component {
   }
 
   changeFolder(folderId) {
-    const folder = this.context.folders.find((folder) => {
+    const folder = this.context.folders.filter((folder) => {
       return folder.id === parseInt(folderId);
     });
     this.setState(
       (prevState) => ({
         noteFolder: {
           ...prevState.noteFolder,
-          value: folderId ? folder.folder_name : "",
-          id: folderId ? folder.id : "",
+          value: folderId ? folder[0].folder_name : "",
+          id: folderId ? folder[0].id : "",
           touched: true,
         },
       }),
@@ -277,11 +277,11 @@ class AddNote extends Component {
 //   addNote: () => {},
 // };
 
-AddNote.propTypes = {
+EditNote.propTypes = {
   context: PropTypes.shape({
     folders: PropTypes.array.isRequired,
     addNote: PropTypes.func.isRequired,
   }),
 };
 
-export default withRouter(AddNote);
+export default withRouter(EditNote);

@@ -11,7 +11,10 @@ exports[`App component renders without error 1`] = `
         Object {
           "addFolder": [Function],
           "addNote": [Function],
+          "deleteFolder": [Function],
           "deleteNote": [Function],
+          "editFolder": [Function],
+          "editNote": [Function],
           "folders": Array [],
           "notes": Array [],
         }
@@ -32,11 +35,19 @@ exports[`App component renders without error 1`] = `
       />
       <Route
         component={[Function]}
+        path="/edit-folder/:folderId"
+      />
+      <Route
+        component={[Function]}
         path="/note/:noteId"
       />
       <Route
         component={[Function]}
         path="/add-note/"
+      />
+      <Route
+        component={[Function]}
+        path="/edit-note/:noteId"
       />
     </ContextProvider>
   </main>
