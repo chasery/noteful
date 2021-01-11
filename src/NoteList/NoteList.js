@@ -42,10 +42,6 @@ class NoteList extends Component {
   }
 }
 
-// NoteList.defaultProps = {
-//   notes: [],
-// };
-
 NoteList.propTypes = {
   context: PropTypes.shape({
     notes: PropTypes.array.isRequired,

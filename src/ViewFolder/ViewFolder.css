@@ -1,0 +1,12 @@
+.FolderListWrapper {
+  flex: 1;
+  margin-right: 1rem;
+}
+
+.FolderListWrapper > h2 {
+  margin: 0 0 1rem;
+}
+
+.NoteListWrapper {
+  flex: 3;
+}

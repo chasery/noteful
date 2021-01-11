@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
 import NotefulContext from "../NotefulContext";
 import InputError from "../InputError/InputError";
-import "./AddNote.css";
+import "./EditNote.css";
 
-class AddNote extends Component {
+class EditNote extends Component {
   static contextType = NotefulContext;
 
   state = {
@@ -27,21 +27,22 @@ class AddNote extends Component {
     },
   };
 
-  addNoteRequest(e) {
+  editNoteRequest(e) {
     e.preventDefault();
+    const { noteId } = this.props.match.params;
     const { noteName, noteFolder, noteContent } = this.state;
-    // const noteModified = new Date().toISOString();
-    const newNote = {
+    const noteModified = new Date().toISOString();
+    const updatedNote = {
       note_name: noteName.value,
-      // modified: noteModified,
+      modified: noteModified,
       folder_id: noteFolder.id,
       note_content: noteContent.value,
     };
-    const foldersUrl = `http://localhost:8000/api/notes`;
+    const notesUrl = `http://localhost:8000/api/notes/${noteId}`;
 
-    fetch(foldersUrl, {
-      method: "POST",
-      body: JSON.stringify(newNote),
+    fetch(notesUrl, {
+      method: "PATCH",
+      body: JSON.stringify(updatedNote),
       headers: {
         "content-type": "application/json",
         mode: "cors",
@@ -49,21 +50,14 @@ class AddNote extends Component {
     })
       .then((response) => {
         if (response.ok) {
-          return response.json();
+          return response.status;
         } else {
           throw response.status;
         }
       })
       .then((json) => {
-        const { id, note_name, note_content, modified, folder_id } = json;
-        this.props.history.push(`/folder/${folder_id}`);
-        this.context.addNote({
-          id,
-          note_name,
-          note_content,
-          folder_id,
-          modified,
-        });
+        this.props.history.push(`/folder/${updatedNote.folder_id}`);
+        this.context.editNote(noteId, updatedNote);
       })
       .catch((status) => {
         console.log(status);
@@ -119,15 +113,15 @@ class AddNote extends Component {
   }
 
   changeFolder(folderId) {
-    const folder = this.context.folders.find((folder) => {
+    const folder = this.context.folders.filter((folder) => {
       return folder.id === parseInt(folderId);
     });
     this.setState(
       (prevState) => ({
         noteFolder: {
           ...prevState.noteFolder,
-          value: folderId ? folder.folder_name : "",
-          id: folderId ? folder.id : "",
+          value: folderId ? folder[0].folder_name : "",
+          id: folderId ? folder[0].id : "",
           touched: true,
         },
       }),
@@ -199,8 +193,8 @@ class AddNote extends Component {
     const { noteName, noteFolder, noteContent } = this.state;
 
     return (
-      <form className="Form" onSubmit={(e) => this.addNoteRequest(e)}>
-        <h3>Add a note</h3>
+      <form className="Form" onSubmit={(e) => this.editNoteRequest(e)}>
+        <h3>Edit note</h3>
         <div className="Form__group">
           <label htmlFor="NoteName">
             Note Name:<span className="Form__required">*</span>
@@ -265,23 +259,18 @@ class AddNote extends Component {
           type="submit"
           disabled={noteName.error || noteFolder.error || noteContent.error}
         >
-          Add Note
+          Edit Note
         </button>
       </form>
     );
   }
 }
 
-// AddNote.defaultProps = {
-//   folders: [],
-//   addNote: () => {},
-// };
-
-AddNote.propTypes = {
+EditNote.propTypes = {
   context: PropTypes.shape({
     folders: PropTypes.array.isRequired,
     addNote: PropTypes.func.isRequired,
   }),
 };
 
-export default withRouter(AddNote);
+export default withRouter(EditNote);

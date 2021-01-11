@@ -1,0 +1,11 @@
+.NoteListHeader > h2 {
+  margin: 0 0 1rem;
+}
+
+.NoteListHeader__folderControls {
+  padding: 0 0 2.125rem;
+}
+
+.NoteListHeader__folderControls a + button {
+  margin-left: 0.5rem;
+}

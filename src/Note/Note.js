@@ -16,7 +16,7 @@ class Note extends Component {
     })
       .then((response) => {
         if (response.ok) {
-          return response.json();
+          return response.status;
         } else {
           throw response.status;
         }
@@ -51,6 +51,9 @@ class Note extends Component {
               Date modified on {this.noteDate(this.props.modified)}
             </h3>
           </div>
+          <Link className="Note__edit" to={`/edit-note/${this.props.id}`}>
+            <button>Edit Note</button>
+          </Link>
           <button
             className="Note__delete"
             onClick={() =>
