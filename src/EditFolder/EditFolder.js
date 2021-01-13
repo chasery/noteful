@@ -16,6 +16,35 @@ class EditFolder extends Component {
     },
   };
 
+  componentDidMount() {
+    const { folderId } = this.props.match.params;
+    const notesUrl = `http://localhost:8000/api/folders/${folderId}`;
+
+    fetch(notesUrl, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        mode: "cors",
+      },
+    })
+      .then((res) => {
+        if (!res.ok) return res.json().then((error) => Promise.reject(error));
+
+        return res.json();
+      })
+      .then((json) => {
+        this.setState((prevState) => ({
+          folderName: {
+            ...prevState.noteContent,
+            value: json.folder_name,
+          },
+        }));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   editFolderRequest(e) {
     e.preventDefault();
     const { folderId } = this.props.match.params;

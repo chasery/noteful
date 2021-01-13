@@ -27,6 +27,43 @@ class EditNote extends Component {
     },
   };
 
+  componentDidMount() {
+    const { noteId } = this.props.match.params;
+    const notesUrl = `http://localhost:8000/api/notes/${noteId}`;
+
+    fetch(notesUrl, {
+      method: "GET",
+      headers: {
+        "content-type": "application/json",
+        mode: "cors",
+      },
+    })
+      .then((res) => {
+        if (!res.ok) return res.json().then((error) => Promise.reject(error));
+
+        return res.json();
+      })
+      .then((json) => {
+        this.setState((prevState) => ({
+          noteName: {
+            ...prevState.noteName,
+            value: json.note_name,
+          },
+          noteFolder: {
+            ...prevState.noteFolder,
+            id: json.folder_id,
+          },
+          noteContent: {
+            ...prevState.noteContent,
+            value: json.note_content,
+          },
+        }));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   editNoteRequest(e) {
     e.preventDefault();
     const { noteId } = this.props.match.params;
@@ -257,7 +294,12 @@ class EditNote extends Component {
         <button
           className="Form__submit"
           type="submit"
-          disabled={noteName.error || noteFolder.error || noteContent.error}
+          disabled={
+            noteName.error ||
+            noteFolder.error ||
+            noteContent.error ||
+            (!noteName.touched && !noteContent.touched && !noteFolder.touched)
+          }
         >
           Edit Note
         </button>
